@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
-import 'question.dart';
+import 'quiz_brain.dart';
+
+QuizBrain quizBrain = QuizBrain();
 
 void main() => runApp(Quizzler());
 
@@ -28,28 +30,6 @@ class QuizPage extends StatefulWidget {
 class _QuizPageState extends State<QuizPage> {
   List<Widget> scoreKeeper = [];
 
-  List<Question> questions = [
-    Question(question: 'Uma vaca pode descer mas não consegue subir escadas', answer: false),
-    Question(question: 'Um quarto dos ossos humanos estão nos pés', answer: true),
-    Question(question: 'Sangue de lesma é verde', answer: true),
-  ];
-
-  int questionNumber = 0;
-
-  void checkIfCorrect(bool choiceValue) {
-    bool correctAnswer = questions[questionNumber].questionAnswer;
-
-    if (correctAnswer == choiceValue) {
-      print('ACERTO MIZERAVI');
-    } else {
-      print('ERROU');
-    }
-
-    if (questionNumber < questions.length - 1) {
-      questionNumber++;
-    }
-  }
-
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -62,7 +42,7 @@ class _QuizPageState extends State<QuizPage> {
             padding: EdgeInsets.all(10.0),
             child: Center(
               child: Text(
-                questions[questionNumber].questionText,
+                quizBrain.getQuestionsText(),
                 textAlign: TextAlign.center,
                 style: TextStyle(
                   fontSize: 25.0,
@@ -87,7 +67,7 @@ class _QuizPageState extends State<QuizPage> {
               ),
               onPressed: () {
                 setState(() {
-                  checkIfCorrect(true);
+                  quizBrain.isCorrect(true);
                 });
               },
             ),
@@ -107,7 +87,7 @@ class _QuizPageState extends State<QuizPage> {
               ),
               onPressed: () {
                 setState(() {
-                  checkIfCorrect(false);
+                  quizBrain.isCorrect(false);
                 });
               },
             ),
