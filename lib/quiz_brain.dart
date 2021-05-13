@@ -1,7 +1,8 @@
 import 'package:flutter/cupertino.dart';
-
 import 'question.dart';
 import 'score_keeper.dart';
+
+import 'package:rflutter_alert/rflutter_alert.dart';
 
 ScoreKeeper scoreKeeper = ScoreKeeper();
 
@@ -23,6 +24,12 @@ class QuizBrain {
     if (notLastQuestion) _scoreNumber++;
 
     return notLastQuestion;
+  }
+
+  bool isLastQuestion() {
+    print(_scoreNumber);
+    print(_questionNumber);
+    return _scoreNumber > _questionNumber;
   }
 
   void nextQuestion() {
@@ -53,5 +60,11 @@ class QuizBrain {
 
   List<Icon> getScore() {
     return scoreKeeper.getScore();
+  }
+
+  void resetQuiz() {
+    _scoreNumber = 0;
+    _questionNumber = 0;
+    scoreKeeper.resetScore();
   }
 }

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'quiz_brain.dart';
+import 'package:rflutter_alert/rflutter_alert.dart';
 
 QuizBrain quizBrain = QuizBrain();
 
@@ -30,6 +31,16 @@ class QuizPage extends StatefulWidget {
 class _QuizPageState extends State<QuizPage> {
   @override
   Widget build(BuildContext context) {
+    void resetGame() {
+      Alert(
+        context: context,
+        title: "Acabou o jogo",
+        desc: "O jogo será reiniciado.",
+      ).show();
+
+      quizBrain.resetQuiz();
+    }
+
     return Column(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -66,6 +77,7 @@ class _QuizPageState extends State<QuizPage> {
               onPressed: () {
                 setState(() {
                   quizBrain.isCorrect(true);
+                  if (quizBrain.isLastQuestion()) resetGame();
                 });
               },
             ),
@@ -86,6 +98,7 @@ class _QuizPageState extends State<QuizPage> {
               onPressed: () {
                 setState(() {
                   quizBrain.isCorrect(false);
+                  if (quizBrain.isLastQuestion()) resetGame();
                 });
               },
             ),

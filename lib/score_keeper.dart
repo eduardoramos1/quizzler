@@ -21,4 +21,8 @@ class ScoreKeeper {
   List<Icon> getScore() {
     return _score;
   }
+
+  void resetScore() {
+    _score = [];
+  }
 }
