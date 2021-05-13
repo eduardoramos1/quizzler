@@ -1,15 +1,29 @@
+import 'package:flutter/cupertino.dart';
+
 import 'question.dart';
+import 'score_keeper.dart';
+
+ScoreKeeper scoreKeeper = ScoreKeeper();
 
 class QuizBrain {
   int _questionNumber = 0;
+  int _scoreNumber = 0;
 
   List<Question> _questions = [
     Question('Uma vaca pode descer mas não consegue subir escadas', false),
     Question('Um quarto dos ossos humanos estão nos pés', true),
     Question('Sangue de lesma é verde', true),
     Question('2 + 2 = 4', true),
-    Question('Elefante', false)
+    Question('Elefante', false),
+    Question("Eai", true)
   ];
+
+  bool isNotAtLastQuestion() {
+    bool notLastQuestion = _scoreNumber != _questions.length;
+    if (notLastQuestion) _scoreNumber++;
+
+    return notLastQuestion;
+  }
 
   void nextQuestion() {
     if (_questionNumber < _questions.length - 1) {
@@ -27,10 +41,9 @@ class QuizBrain {
 
   bool isCorrect(bool answer) {
     bool correctAnswer = answer == getQuestionAnswer();
-    if (correctAnswer) {
-      print('ACEERTO MIZERAVI');
-    } else {
-      print('ERROU');
+
+    if (isNotAtLastQuestion()) {
+      scoreKeeper.addAnswer(correctAnswer);
     }
 
     nextQuestion();
@@ -38,7 +51,7 @@ class QuizBrain {
     return correctAnswer;
   }
 
-  List get questions {
-    return _questions;
+  List<Icon> getScore() {
+    return scoreKeeper.getScore();
   }
 }
